@@ -4,8 +4,7 @@ version = "0.1.0"
 description = "find subscriptions and recurring payments in your bank statement"
 authors = ["Valentin Khomutenko <valentine.khomutenko@gmail.com>"]
 license = "MIT"
-readme = "README.md"
-packages = [{include = "find_subscriptions"}]
+packages = [{include = "subscriptions"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
