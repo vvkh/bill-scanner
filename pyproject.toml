@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "find-subscriptions"
+name = "bill-scanner"
 version = "0.1.0"
 description = "find subscriptions and recurring payments in your bank statement"
 authors = ["Valentin Khomutenko <valentine.khomutenko@gmail.com>"]
