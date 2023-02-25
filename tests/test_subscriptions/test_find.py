@@ -1,63 +1,65 @@
 import datetime
 
 
-import subscriptions
+import scanner
+import scanner.subcriptions
+import scanner.transactions
 
 
 def test_find():
     transactions = [
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Coffee",
             timestamp=datetime.datetime.fromisoformat("2020-01-01T00:00:00"),
             amount=100
         ),
     ]
 
-    assert subscriptions.find(transactions) == []
+    assert scanner.subcriptions.find(transactions) == []
 
 
     transactions = [
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Coffee",
             timestamp=datetime.datetime.fromisoformat("2020-01-01T00:00:00"),
             amount=100
         ),
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Lunch",
             timestamp=datetime.datetime.fromisoformat("2020-02-01T00:00:00"),
             amount=200
         ),
     ]
-    assert subscriptions.find(transactions) == []
+    assert scanner.subcriptions.find(transactions) == []
 
     transactions = [
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Coffee",
             timestamp=datetime.datetime.fromisoformat("2020-01-01T00:00:00"),
             amount=100
         ),
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Lunch",
             timestamp=datetime.datetime.fromisoformat("2020-02-02T00:00:00"),
             amount=100
         ),
     ]
-    assert subscriptions.find(transactions) == []
+    assert scanner.subcriptions.find(transactions) == []
 
     transactions = [
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Netflix",
             timestamp=datetime.datetime.fromisoformat("2020-01-01T00:00:00"),
             amount=100
         ),
-        subscriptions.Transaction(
+        scanner.transactions.Transaction(
             message="Netflix",
             timestamp=datetime.datetime.fromisoformat("2020-02-01T00:00:00"),
             amount=100
         ),
     ]
-    assert subscriptions.find(transactions) == [
-        subscriptions.Subscription(
+    assert scanner.subcriptions.find(transactions) == [
+        scanner.subcriptions.Subscription(
             name="Netflix",
             amount=100,
         )

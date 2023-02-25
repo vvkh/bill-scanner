@@ -1,18 +1,17 @@
 import dataclasses
 import datetime
 
-
-@dataclasses.dataclass
-class Transaction:
-    message: str
-    timestamp: datetime.datetime
-    amount: int
+from scanner.transactions import Transaction
 
 
 @dataclasses.dataclass
 class Subscription:
     name: str
     amount: int
+
+
+def _date_only(timestamp: datetime.datetime) -> tuple[int, int, int]:
+    return timestamp.year, timestamp.month, timestamp.day
 
 
 def find(transactions: list[Transaction]) -> list[Subscription]:
@@ -57,7 +56,3 @@ def find(transactions: list[Transaction]) -> list[Subscription]:
             )
 
     return subscriptions
-
-
-def _date_only(timestamp: datetime.datetime) -> tuple[int, int, int]:
-    return timestamp.year, timestamp.month, timestamp.day
