@@ -7,7 +7,7 @@ from scanner.transactions import Transaction
 @dataclasses.dataclass
 class Subscription:
     name: str
-    amount: int
+    amount: float
 
 
 def _date_only(timestamp: datetime.datetime) -> tuple[int, int, int]:
