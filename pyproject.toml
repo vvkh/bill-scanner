@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "find subscriptions and recurring payments in your bank statement"
 authors = ["Valentin Khomutenko <valentine.khomutenko@gmail.com>"]
 license = "MIT"
-packages = [{include = "scanner"}]
+packages = [{include = "scanner"}, {include = "scripts"}]
+
+[tool.poetry.scripts]
+bill-scanner = "scripts.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
