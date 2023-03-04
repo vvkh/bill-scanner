@@ -8,7 +8,7 @@ def main():
     parser = scanner.cli.make_parser()
     args = parser.parse_args()
     try:
-        output = scanner.cli.find_subscriptions(args.csv, args.format)
+        output = scanner.cli.find_subscriptions(args.csv, args.format, args.ignore_pattern)
     except scanner.errors.ScannerException as e:
         print(e)
         exit(1)
