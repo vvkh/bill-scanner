@@ -64,3 +64,33 @@ def test_find():
             amount=100,
         )
     ]
+
+
+def test_find_variable_period():
+    """
+    Sometimes subscription payments are not made on the same day of the month.
+    """
+    transactions = [
+        scanner.transactions.Transaction(
+            message="EXPRESSVPN.COM",
+            amount=12.95,
+            timestamp=datetime.datetime(year=2023, month=2, day=22),
+        ),
+        scanner.transactions.Transaction(
+            message="EXPRESSVPN.COM",
+            amount=12.95,
+            timestamp=datetime.datetime(year=2023, month=1, day=21),
+        ),
+        scanner.transactions.Transaction(
+            message="EXPRESSVPN.COM",
+            amount=12.95,
+            timestamp=datetime.datetime(year=2022, month=12, day=23),
+        )
+    ]
+    assert scanner.subcriptions.find(transactions) == [
+        scanner.subcriptions.Subscription(
+            name="EXPRESSVPN.COM",
+            amount=12.95,
+        ),
+    ]
+

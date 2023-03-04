@@ -10,10 +10,6 @@ class Subscription:
     amount: float
 
 
-def _date_only(timestamp: datetime.datetime) -> tuple[int, int, int]:
-    return timestamp.year, timestamp.month, timestamp.day
-
-
 def find(transactions: list[Transaction]) -> list[Subscription]:
     payments_by_title: dict[str, list[Transaction]] = {}
     for txn in transactions:
@@ -35,19 +31,10 @@ def find(transactions: list[Transaction]) -> list[Subscription]:
         subscription_amount = paid_amounts.pop()
 
         time_periods_between_payments = [
-            (_date_only(payment.timestamp), _date_only(prev_payment.timestamp))
+            payment.timestamp - prev_payment.timestamp
             for prev_payment, payment in zip(payments[1:], payments)
         ]
-        for payment_date, next_payment_date in time_periods_between_payments:
-            year, month, day = payment_date
-            next_year, next_month, next_day = next_payment_date
-            if not all([
-                next_year == year,
-                next_month == month + 1,
-                next_day == day
-            ]):
-                break
-        else:
+        if max(time_periods_between_payments) <= _MAX_PERIOD_BETWEEN_PAYMENTS:
             subscriptions.append(
                 Subscription(
                     name=title,
@@ -56,3 +43,12 @@ def find(transactions: list[Transaction]) -> list[Subscription]:
             )
 
     return subscriptions
+
+
+# 1 month +/- 10 days
+_MAX_PERIOD_BETWEEN_PAYMENTS = datetime.timedelta(days=40)
+
+
+def _date_only(timestamp: datetime.datetime) -> tuple[int, int, int]:
+    return timestamp.year, timestamp.month, timestamp.day
+
