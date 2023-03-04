@@ -94,6 +94,34 @@ def test_find_variable_period():
         ),
     ]
 
+    reverse_order = list(reversed(transactions))
+    assert scanner.subcriptions.find(reverse_order) == [
+        scanner.subcriptions.Subscription(
+            name="EXPRESSVPN.COM",
+            amount=12.95,
+        ),
+    ]
+
+
+def test_find_exceeding_variable_period_limit():
+    transactions = [
+        scanner.transactions.Transaction(
+            message="EXPRESSVPN.COM",
+            amount=12.95,
+            timestamp=datetime.datetime(year=2023, month=3, day=22),
+        ),
+        scanner.transactions.Transaction(
+            message="EXPRESSVPN.COM",
+            amount=12.95,
+            timestamp=datetime.datetime(year=2023, month=1, day=22),
+        ),
+    ]
+    assert scanner.subcriptions.find(transactions) == []
+
+    reverse_order = list(reversed(transactions))
+    assert scanner.subcriptions.find(reverse_order) == []
+
+
 
 def test_find_variable_message():
     """

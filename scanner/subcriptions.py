@@ -37,7 +37,7 @@ def find(transactions: list[Transaction], ignore_pattern: str | None = None) -> 
             payment.timestamp - prev_payment.timestamp
             for prev_payment, payment in zip(payments[1:], payments)
         ]
-        if max(time_periods_between_payments) <= _MAX_PERIOD_BETWEEN_PAYMENTS:
+        if max(map(abs, time_periods_between_payments)) <= _MAX_PERIOD_BETWEEN_PAYMENTS:
             subscriptions.append(
                 Subscription(
                     name=title,
