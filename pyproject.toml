@@ -13,13 +13,16 @@ bill-scanner = "scripts.main:main"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^0.991"
 pytest = "^7.2.0"
-flake8 = "^6.0.0"
-flake8-pyproject = "^1.2.2"
+ruff = "^0.0.254"
+pyright = "^1.1.296"
 
-[tool.flake8]
-max-line-length = 120
+[tool.ruff]
+line-length = 120
+
+[tool.pyright]
+typeCheckingMode = "basic"
+
 
 [build-system]
 requires = ["poetry-core"]

@@ -2,6 +2,6 @@ install:
 	poetry install
 
 check:
-	poetry run flake8 scanner/
-	poetry run mypy scanner/
+	poetry run ruff ./
+	poetry run pyright ./
 	poetry run pytest tests/
