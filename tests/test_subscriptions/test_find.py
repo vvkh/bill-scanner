@@ -122,6 +122,31 @@ def test_find_exceeding_variable_period_limit():
     assert scanner.subcriptions.find(reverse_order) == []
 
 
+def test_min_period_between_payments():
+    """
+    If payments are made too often, it's probably not a subscription.
+    Imagine buying a coffee every day.
+    """
+    transactions = [
+        scanner.transactions.Transaction(
+            message="coffee",
+            amount=1,
+            timestamp=datetime.datetime(year=2023, month=1, day=23),
+        ),
+        scanner.transactions.Transaction(
+            message="coffee",
+            amount=1,
+            timestamp=datetime.datetime(year=2023, month=1, day=22),
+        ),
+    ]
+    assert scanner.subcriptions.find(transactions) == []
+
+    reverse_order = list(reversed(transactions))
+    assert scanner.subcriptions.find(reverse_order) == []
+
+
+
+
 
 def test_find_variable_message():
     """

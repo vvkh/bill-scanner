@@ -37,16 +37,26 @@ def find(transactions: list[Transaction], ignore_pattern: str | None = None) -> 
             payment.timestamp - prev_payment.timestamp
             for prev_payment, payment in zip(payments[1:], payments)
         ]
-        if max(map(abs, time_periods_between_payments)) <= _MAX_PERIOD_BETWEEN_PAYMENTS:
-            subscriptions.append(
-                Subscription(
-                    name=title,
-                    amount=subscription_amount,
-                )
+        max_period = max(map(abs, time_periods_between_payments))
+        min_period = min(map(abs, time_periods_between_payments))
+
+        if max_period > _MAX_PERIOD_BETWEEN_PAYMENTS:
+            continue
+        if min_period < _MIN_PERIOD_BETWEEN_PAYMENTS:
+            continue
+
+        subscriptions.append(
+            Subscription(
+                name=title,
+                amount=subscription_amount,
             )
+        )
 
     return subscriptions
 
 
 # 1 month +/- 10 days
 _MAX_PERIOD_BETWEEN_PAYMENTS = datetime.timedelta(days=40)
+
+# I don't think anyone pays for a subscription more often than once a week
+_MIN_PERIOD_BETWEEN_PAYMENTS = datetime.timedelta(days=7)
